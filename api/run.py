@@ -14,7 +14,7 @@ AUTH_PARAMS = {
     'login': API_KEY,
     'authtoken': API_SECRET
 }
-GET_BASE_URL = 'https://api.jumpseller.com/v1/products/search.json?query=*&status=available'
+get_base_url = 'https://api.jumpseller.com/v1/products/avalaible.json'
 SLACK_WEBHOOK_URL = 'https://hooks.slack.com/services/XXX/YYY/ZZZ'  # reemplaza por tu webhook real
 
 def get_all_products():
@@ -22,7 +22,7 @@ def get_all_products():
     page = 1
     while True:
         params = {**AUTH_PARAMS, 'page': page, 'status': 'available', 'limit': 100}
-        response = requests.get(GET_BASE_URL, params=params)
+        response = requests.get(BASE_URL, params=params)
         if response.status_code != 200:
             break
         data = response.json()
@@ -73,6 +73,6 @@ def notify_slack():
 @app.get("/")
 def run_script():
     products = get_all_products()
-    # result = disable_products(products)
+    result = disable_products(products)
     notify_slack()
-    return {"message": "Proceso completado", "resultados": len(products)}
+    return {"message": "Proceso completado", "resultados": len(products), "logs": result}
