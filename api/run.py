@@ -134,7 +134,7 @@ def form_view():
 async def run_script_post(magic_word: str = Form(...)):
     if magic_word.strip().lower() == MAGIC_WORD:
         products = get_all_products()
-        result = disable_products(products)
+        result = "disable_products(products)"
         notify_slack()
         return f"""
         <html>
