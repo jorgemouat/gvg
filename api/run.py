@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Form
 from fastapi.responses import HTMLResponse
-from .jumpseller_utils import get_all_products, disable_products, notify_slack
-from .settings import MAGIC_WORD
+from api.jumpseller_utils import get_all_products, disable_products, notify_slack
+from api.settings import MAGIC_WORD
 
 app = FastAPI()
 
