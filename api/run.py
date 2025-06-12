@@ -70,15 +70,6 @@ def form_view():
                 button[type='submit']:hover {
                     background: #2563eb;
                 }
-                .loader {
-                    display: inline-block;
-                    animation: spin 1s linear infinite;
-                    font-size: 2em;
-                }
-                @keyframes spin {
-                    0% { transform: rotate(0deg);}
-                    100% { transform: rotate(360deg);}
-                }
                 #loading {
                     display: none;
                     margin-top: 30px;
@@ -93,17 +84,36 @@ def form_view():
             <script>
                 function showLoading() {
                     document.getElementById('loading').style.display = 'block';
+                    var bar = document.getElementById('progress-bar');
+                    var width = 0;
+                    bar.style.width = '0%';
+                    var interval = setInterval(function() {
+                        if (width >= 100) {
+                            clearInterval(interval);
+                        } else {
+                            width += Math.random() * 7 + 2; // random progress
+                            if (width > 100) width = 100;
+                            bar.style.width = width + '%';
+                        }
+                    }, 250);
                 }
             </script>
         </head>
         <body>
             <h1>Desactivador de Productos GVG</h1>
-            <form method=\"post\" onsubmit=\"showLoading()\">
+            <form method="post" onsubmit="showLoading()">
                 <p style='font-size:1.1em; color:#555;'>Ingresa la clave de acceso para continuar:</p>
-                <input name=\"magic_word\" type=\"password\" autofocus required>
-                <button type=\"submit\">Desactivar productos</button>
+                <input name="magic_word" type="password" autofocus required>
+                <button type="submit">Desactivar productos</button>
             </form>
-            <div id=\"loading\" class=\"loader\">⏳ Procesando...</div>
+            <div id="loading" style="display:none; margin-top:30px; font-size:1.1em; color:#444;">
+                <div style="width: 100%; max-width: 320px; margin: 0 auto;">
+                    <div id="progress-bar-container" style="background: #e0e0e0; border-radius: 8px; height: 18px; width: 100%; overflow: hidden;">
+                        <div id="progress-bar" style="height: 100%; width: 0%; background: linear-gradient(90deg, #4f8cff 60%, #2563eb 100%); transition: width 0.3s;"></div>
+                    </div>
+                </div>
+                <span style="display:block; margin-top:10px;">Procesando...</span>
+            </div>
         </body>
     </html>
     """
@@ -113,7 +123,7 @@ async def run_script_post(magic_word: str = Form(...)):
     if magic_word.strip().lower() == MAGIC_WORD:
         products = get_all_products()
         result = disable_products(products)
-        notify_slack()
+        # notify_slack()
         return f"""
         <html>
             <head>
