@@ -10,7 +10,7 @@ def form_view():
     return """
     <html>
         <head>
-            <title>GVG Disable Script</title>
+            <title>Desactivador de Productos GVG</title>
             <meta name='viewport' content='width=device-width, initial-scale=1'>
             <style>
                 html, body {
@@ -19,38 +19,56 @@ def form_view():
                     padding: 0;
                 }
                 body {
-                    font-family: sans-serif;
-                    background: #f7f7fa;
+                    font-family: 'Segoe UI', Arial, sans-serif;
+                    background: #f4f6fb;
                     text-align: center;
                     margin-top: 8vw;
                 }
                 h1 {
-                    font-size: 6vw;
-                    margin-bottom: 5vw;
+                    font-size: 2.2em;
+                    margin-bottom: 2vw;
+                    color: #222;
+                    font-weight: 600;
                 }
                 form, .modal-content {
                     width: 90vw;
                     max-width: 350px;
                     margin: 0 auto;
+                    background: #fff;
+                    border-radius: 12px;
+                    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+                    padding: 2.5em 1.5em 2em 1.5em;
                 }
                 input[name='magic_word'] {
-                    padding: 3vw;
-                    font-size: 1.2em;
+                    padding: 0.9em;
+                    font-size: 1.1em;
                     width: 80%;
                     max-width: 250px;
-                    margin-bottom: 3vw;
+                    margin-bottom: 1.5em;
+                    border: 1px solid #d1d5db;
+                    border-radius: 6px;
+                    outline: none;
+                    transition: border 0.2s;
                 }
-                button[type='submit'], button[onclick] {
-                    padding: 3vw;
+                input[name='magic_word']:focus {
+                    border: 1.5px solid #4f8cff;
+                }
+                button[type='submit'] {
+                    padding: 0.9em;
                     font-size: 1.1em;
                     border-radius: 8px;
                     border: none;
-                    margin-top: 2vw;
-                    margin-bottom: 2vw;
-                    background: #ffe066;
+                    margin-top: 0.5em;
+                    background: #4f8cff;
+                    color: #fff;
                     cursor: pointer;
                     width: 90%;
                     max-width: 320px;
+                    font-weight: 500;
+                    transition: background 0.2s;
+                }
+                button[type='submit']:hover {
+                    background: #2563eb;
                 }
                 .loader {
                     display: inline-block;
@@ -61,35 +79,12 @@ def form_view():
                     0% { transform: rotate(0deg);}
                     100% { transform: rotate(360deg);}
                 }
-                /* Modal styles */
-                .modal {
+                #loading {
                     display: none;
-                    position: fixed;
-                    z-index: 999;
-                    left: 0;
-                    top: 0;
-                    width: 100vw;
-                    height: 100vh;
-                    overflow: auto;
-                    background-color: rgba(0,0,0,0.4);
+                    margin-top: 30px;
+                    font-size: 1.1em;
+                    color: #444;
                 }
-                .modal-content {
-                    background-color: #fff;
-                    margin: 30vh auto 0 auto;
-                    padding: 7vw 5vw;
-                    border: 1px solid #888;
-                    border-radius: 12px;
-                    text-align: center;
-                    font-size: 1.5em;
-                }
-                .close {
-                    color: #aaa;
-                    float: right;
-                    font-size: 28px;
-                    font-weight: bold;
-                    cursor: pointer;
-                }
-                .close:hover { color: #000; }
                 @media (min-width: 600px) {
                     h1 { font-size: 2.2em; }
                     form, .modal-content { width: 350px; }
@@ -99,33 +94,16 @@ def form_view():
                 function showLoading() {
                     document.getElementById('loading').style.display = 'block';
                 }
-                function showModal() {
-                    document.getElementById('myModal').style.display = 'block';
-                }
-                function closeModal() {
-                    document.getElementById('myModal').style.display = 'none';
-                }
             </script>
         </head>
         <body>
-            <h1>🪄 Bienvenido José, Pichula Chica, Mayo! 🪄</h1>
+            <h1>Desactivador de Productos GVG</h1>
             <form method=\"post\" onsubmit=\"showLoading()\">
-                <p style='font-size:1.1em;'>Pon la <b>clave secreta</b> pa correr la wea:</p>
-                <input name=\"magic_word\" type=\"text\" autofocus>
-                <button type=\"submit\">✨ Haz click aquí po perroooo! ✨</button>
+                <p style='font-size:1.1em; color:#555;'>Ingresa la clave de acceso para continuar:</p>
+                <input name=\"magic_word\" type=\"password\" autofocus required>
+                <button type=\"submit\">Desactivar productos</button>
             </form>
-            <div id=\"loading\" style=\"display:none; margin-top:30px; font-size:1.3em; color:#444;\">
-                <span class=\"loader\">🌀</span>
-                <span style=\"margin-left:10px;\">Ten paciencia ql, ya cargará...</span>
-            </div>
-            <br><br>
-            <button onclick=\"showModal()\">👀 Cacha esta wea</button>
-            <div id=\"myModal\" class=\"modal\">
-                <div class=\"modal-content\">
-                    <span class=\"close\" onclick=\"closeModal()\">&times;</span>
-                    <p>pico pal que lee</p>
-                </div>
-            </div>
+            <div id=\"loading\" class=\"loader\">⏳ Procesando...</div>
         </body>
     </html>
     """
@@ -147,19 +125,21 @@ async def run_script_post(magic_word: str = Form(...)):
                         padding: 0;
                     }}
                     body {{
-                        font-family: sans-serif;
-                        background: #eaffea;
+                        font-family: 'Segoe UI', Arial, sans-serif;
+                        background: #f4f6fb;
                         text-align: center;
                         margin-top: 8vw;
                     }}
                     h2 {{
-                        font-size: 6vw;
-                        margin-bottom: 5vw;
-                        color: #1a7f37;
+                        font-size: 2em;
+                        margin-bottom: 1.5vw;
+                        color: #2563eb;
+                        font-weight: 600;
                     }}
                     p {{
-                        font-size: 1.3em;
-                        margin-bottom: 2vw;
+                        font-size: 1.1em;
+                        margin-bottom: 1.5vw;
+                        color: #333;
                     }}
                     pre {{
                         text-align: left;
@@ -171,18 +151,21 @@ async def run_script_post(magic_word: str = Form(...)):
                         max-width: 90vw;
                         overflow-x: auto;
                         margin-bottom: 2vw;
+                        box-shadow: 0 2px 8px rgba(0,0,0,0.04);
                     }}
                     a {{
                         display: inline-block;
                         margin-top: 2vw;
-                        padding: 2vw 5vw;
-                        background: #ffe066;
-                        color: #222;
+                        padding: 0.7em 2em;
+                        background: #4f8cff;
+                        color: #fff;
                         border-radius: 8px;
                         text-decoration: none;
                         font-size: 1.1em;
-                        font-weight: bold;
+                        font-weight: 500;
+                        transition: background 0.2s;
                     }}
+                    a:hover {{ background: #2563eb; }}
                     @media (min-width: 600px) {{
                         h2 {{ font-size: 2.2em; }}
                         p {{ font-size: 1.2em; }}
@@ -192,10 +175,10 @@ async def run_script_post(magic_word: str = Form(...)):
                 </style>
             </head>
             <body>
-                <h2>🎉 No se porque funcionó, pero bacan! 🎉</h2>
-                <p>Desactivados: <b>{len(products)}</b></p>
+                <h2>Productos desactivados correctamente</h2>
+                <p>Total desactivados: <b>{len(products)}</b></p>
                 <pre>{chr(10).join(result)}</pre>
-                <br><a href="/">🔙 Correlo again</a>
+                <a href=\"/\">Volver al inicio</a>
             </body>
         </html>
         """
@@ -211,49 +194,46 @@ async def run_script_post(magic_word: str = Form(...)):
                         padding: 0;
                     }
                     body {
-                        font-family: sans-serif;
+                        font-family: 'Segoe UI', Arial, sans-serif;
                         background: #fff3f3;
                         text-align: center;
                         margin-top: 8vw;
                     }
                     h2 {
-                        font-size: 6vw;
-                        margin-bottom: 5vw;
+                        font-size: 2em;
+                        margin-bottom: 1.5vw;
                         color: #c00;
+                        font-weight: 600;
                     }
                     p {
-                        font-size: 1.3em;
-                        margin-bottom: 2vw;
-                    }
-                    img {
-                        margin: 2vw 0;
-                        max-width: 90vw;
-                        border-radius: 12px;
+                        font-size: 1.1em;
+                        margin-bottom: 1.5vw;
+                        color: #333;
                     }
                     a {
                         display: inline-block;
                         margin-top: 2vw;
-                        padding: 2vw 5vw;
-                        background: #ffe066;
-                        color: #222;
+                        padding: 0.7em 2em;
+                        background: #4f8cff;
+                        color: #fff;
                         border-radius: 8px;
                         text-decoration: none;
                         font-size: 1.1em;
-                        font-weight: bold;
+                        font-weight: 500;
+                        transition: background 0.2s;
                     }
+                    a:hover { background: #2563eb; }
                     @media (min-width: 600px) {
                         h2 { font-size: 2.2em; }
                         p { font-size: 1.2em; }
-                        img { max-width: 350px; }
                         a { font-size: 1.1em; }
                     }
                 </style>
             </head>
             <body>
-                <h2>🧙‍♂️ Uuuuu malo culiao achuntale! 🧙‍♂️</h2>
-                <p>Trata de nuevo carepico...</p>
-                <img src=\"https://media.giphy.com/media/3o7TKtnuHOHHUjR38Y/giphy.gif\" width=\"300\"/>
-                <br><a href=\"/\">🔙 Back</a>
+                <h2>Acceso denegado</h2>
+                <p>La clave de acceso ingresada es incorrecta. Inténtalo nuevamente.</p>
+                <a href=\"/\">Volver al inicio</a>
             </body>
         </html>
         """

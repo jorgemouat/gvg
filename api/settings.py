@@ -8,4 +8,4 @@ AUTH_PARAMS = {
     'authtoken': API_SECRET
 }
 SLACK_WEBHOOK_URL = 'https://hooks.slack.com/services/XXX/YYY/ZZZ'  # reemplaza por tu webhook real
-MAGIC_WORD = "pico"
+MAGIC_WORD = "@gvg"
